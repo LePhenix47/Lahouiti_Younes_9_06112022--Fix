@@ -38,9 +38,9 @@ export default class NewBill {
     console.log(
       "%cthis.file:",
       "background: darkblue; padding: 5px;",
-      this.file
+      this.file,
+      file.type
     );
-
     //To check if the file sent is an image and the format of the image is acceptable
     let fileIsAnImageWithAcceptableFormat =
       file.type.includes("image/png") ||
@@ -68,6 +68,8 @@ export default class NewBill {
     const formData = new FormData();
     formData.append("email", email);
     formData.append("file", file);
+
+    console.log({ email, file });
 
     this.store
       .bills()
