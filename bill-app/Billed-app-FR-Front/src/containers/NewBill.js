@@ -31,7 +31,7 @@ export default class NewBill {
     //If no file was added
     if (!file) {
       console.log("No file was added");
-      return;
+      return "No file was added";
     }
 
     this.file = file;
@@ -58,7 +58,7 @@ export default class NewBill {
         "font-size:20px; padding: 5px; background: crimson"
       );
       inputFile.value = "";
-      return;
+      return "File type is NOT an image";
     }
     const filePath = e.target.value.split(/\\/g);
     const fileName = filePath[filePath.length - 1];
