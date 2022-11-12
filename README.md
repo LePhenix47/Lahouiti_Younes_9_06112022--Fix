@@ -47,7 +47,7 @@ live-server
 Pour tester _un seul_ fichier sur Jest en affichant les valeurs du `console.log()`
 
 ```cmd
-npm run test -- [FILE].js --silent=false
+npm run test -- [FILE].js --silent=false --coverage=false
 ```
 
 Pour tester _tous_ les fichiers sur Jest
