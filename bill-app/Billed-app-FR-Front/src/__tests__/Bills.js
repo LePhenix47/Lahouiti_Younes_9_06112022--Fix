@@ -58,12 +58,21 @@ describe("Given I am connected as an employee", () => {
 
     test("The button to create new bills should be present and redirect the user to another page", () => {
       document.body.innerHTML = BillsUI({ data: bills });
-      const buttonNewBill = document.querySelector(
-        `button[data-testid="btn-new-bill"]`
+
+      const buttonNewBill = screen.getByTestId("btn-new-bill");
+
+      expect(buttonNewBill).not.toBeNull();
+
+      console.log(
+        buttonNewBill.textContent,
+        "=== 'Nouvelle note de frais'?",
+        buttonNewBill.textContent === "Nouvelle note de frais"
       );
 
+      expect(buttonNewBill.textContent).toBe("Nouvelle note de frais");
+
       fireEvent.click(buttonNewBill);
-      //
+      //we redirect the user
       expect(document.body.innerHTML).not.toBe(BillsUI({ data: bills }));
     });
   });
