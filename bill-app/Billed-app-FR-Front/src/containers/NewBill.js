@@ -23,7 +23,6 @@ export default class NewBill {
 
   handleChangeFile = (e) => {
     e.preventDefault();
-    e.stopImmediatePropagation();
 
     const inputFile = this.document.querySelector(`input[data-testid="file"]`);
 

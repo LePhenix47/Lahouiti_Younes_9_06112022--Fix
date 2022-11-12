@@ -20,6 +20,8 @@ import mockStore from "../__mocks__/store";
 
 import router from "../app/Router.js";
 
+jest.mock("../app/store", () => mockStore);
+
 describe("Given I am connected as an employee", () => {
   describe("When I am on Bills Page", () => {
     test("Then bill icon in vertical layout should be highlighted", async () => {
@@ -61,65 +63,59 @@ describe("Given I am connected as an employee", () => {
 
       const buttonNewBill = screen.getByTestId("btn-new-bill");
 
-      expect(buttonNewBill).not.toBeNull();
-
-      console.log(
-        buttonNewBill.textContent,
-        "=== 'Nouvelle note de frais'?",
-        buttonNewBill.textContent === "Nouvelle note de frais"
-      );
-
       expect(buttonNewBill.textContent).toBe("Nouvelle note de frais");
 
       fireEvent.click(buttonNewBill);
       //we redirect the user
       expect(document.body.innerHTML).not.toBe(BillsUI({ data: bills }));
     });
-  });
 
-  describe("When the eye icon is clicked", () => {
-    test("A dialog window with the image of the bill should open", () => {
-      window = { ...window, localStorage: localStorageMock };
+    describe("When the eye icon is clicked", () => {
+      test("A dialog window with the image of the bill should open", () => {
+        window = { ...window, localStorage: localStorageMock };
 
-      window.localStorage.setItem(
-        "user",
-        JSON.stringify({
-          type: "Employee",
-        })
-      );
+        window.localStorage.setItem(
+          "user",
+          JSON.stringify({
+            type: "Employee",
+          })
+        );
 
-      document.body.innerHTML = BillsUI({ data: bill });
+        document.body.innerHTML = BillsUI({ data: bill });
 
-      const tableBody = screen.getByTestId("tbody");
+        const tableBody = screen.getByTestId("tbody");
 
-      const tableRow = tableBody.querySelector("tr");
+        const tableRow = tableBody.querySelector("tr");
 
-      expect(tableRow).not.toBeNull();
+        expect(tableRow).not.toBeNull();
 
-      const onNavigate = (pathname) => {
-        document.body.innerHTML = ROUTES({ pathname });
-      };
-      const store = bills;
-      const firstBill = new Bills({
-        document,
-        onNavigate,
-        store,
-        localStorage: window.localStorage,
+        const onNavigate = (pathname) => {
+          document.body.innerHTML = ROUTES({ pathname });
+        };
+        const store = bills;
+        const firstBill = new Bills({
+          document,
+          onNavigate,
+          store,
+          localStorage: window.localStorage,
+        });
+        $.fn.modal = jest.fn();
+        const eyeIcon = screen.getByTestId("icon-eye");
+
+        expect(eyeIcon).not.toBeNull();
+
+        const handleClickIconEye = jest.fn(
+          firstBill.handleClickIconEye(eyeIcon)
+        );
+        eyeIcon.addEventListener("click", handleClickIconEye);
+
+        fireEvent.click(eyeIcon);
+
+        expect(handleClickIconEye).toHaveBeenCalled();
+
+        const dialogModal = screen.getByTestId("billModal");
+        expect(dialogModal).not.toBeNull();
       });
-      $.fn.modal = jest.fn();
-      const eyeIcon = screen.getByTestId("icon-eye");
-
-      expect(eyeIcon).not.toBeNull();
-
-      const handleClickIconEye = jest.fn(firstBill.handleClickIconEye(eyeIcon));
-      eyeIcon.addEventListener("click", handleClickIconEye);
-
-      fireEvent.click(eyeIcon);
-
-      expect(handleClickIconEye).toHaveBeenCalled();
-
-      const dialogModal = screen.getByTestId("billModal");
-      expect(dialogModal).not.toBeNull();
     });
   });
 });
