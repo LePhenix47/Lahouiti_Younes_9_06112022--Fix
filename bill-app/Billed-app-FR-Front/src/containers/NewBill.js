@@ -28,12 +28,6 @@ export default class NewBill {
 
     const file = inputFile.files[0];
 
-    //If no file was added
-    if (!file) {
-      console.log("No file was added");
-      return "No file was added";
-    }
-
     this.file = file;
     console.log(
       "%cthis.file:",
@@ -69,7 +63,7 @@ export default class NewBill {
     formData.append("email", email);
     formData.append("file", file);
 
-    console.log({ email, file });
+    console.log("THIS STORE BILLS 999999", this.store.bills());
 
     this.store
       .bills()
