@@ -63,8 +63,6 @@ export default class NewBill {
     formData.append("email", email);
     formData.append("file", file);
 
-    console.log("THIS STORE BILLS 999999", this.store.bills());
-
     this.store
       .bills()
       .create({
