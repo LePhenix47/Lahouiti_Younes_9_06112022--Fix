@@ -16,28 +16,6 @@ import { bill } from "../fixtures/bill.js";
 
 //
 
-/*
-import {
-  fireEvent,
-  getByTestId,
-  logDOM,
-  screen,
-  waitFor,
-} from "@testing-library/dom";
-import userEvent from "@testing-library/user-event";
-import BillsUI from "../views/BillsUI.js";
-import { bills } from "../fixtures/bills.js";
-import { bill } from "../fixtures/bill.js";
-import { ROUTES_PATH, ROUTES } from "../constants/routes.js";
-import Bills from "../containers/Bills";
-import { localStorageMock } from "../__mocks__/localStorage.js";
-import mockStore from "../__mocks__/store";
-
-import router from "../app/Router.js";
-
-jest.mock("../app/store", () => mockStore);
-*/
-
 import {
   fireEvent,
   getByTestId,
