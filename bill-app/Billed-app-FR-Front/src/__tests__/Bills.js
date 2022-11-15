@@ -99,7 +99,7 @@ describe("Given I am connected as an employee", () => {
           store,
           localStorage: window.localStorage,
         });
-        $.fn.modal = jest.fn();
+
         const eyeIcon = screen.getByTestId("icon-eye");
 
         expect(eyeIcon).not.toBeNull();
