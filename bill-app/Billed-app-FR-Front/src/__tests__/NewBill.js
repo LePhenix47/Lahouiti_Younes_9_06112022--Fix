@@ -6,9 +6,37 @@ import NewBillUI from "../views/NewBillUI.js";
 import NewBill from "../containers/NewBill.js";
 import bills from "../__mocks__/store.js";
 import userEvent from "@testing-library/user-event";
+import { localStorageMock } from "../__mocks__/localStorage.js";
+import router from "../app/Router.js";
+import { ROUTES_PATH, ROUTES } from "../constants/routes.js";
+
 import storeFromMock from "../__mocks__/store";
 
 import { bill } from "../fixtures/bill.js";
+
+//
+
+/*
+import {
+  fireEvent,
+  getByTestId,
+  logDOM,
+  screen,
+  waitFor,
+} from "@testing-library/dom";
+import userEvent from "@testing-library/user-event";
+import BillsUI from "../views/BillsUI.js";
+import { bills } from "../fixtures/bills.js";
+import { bill } from "../fixtures/bill.js";
+import { ROUTES_PATH, ROUTES } from "../constants/routes.js";
+import Bills from "../containers/Bills";
+import { localStorageMock } from "../__mocks__/localStorage.js";
+import mockStore from "../__mocks__/store";
+
+import router from "../app/Router.js";
+
+jest.mock("../app/store", () => mockStore);
+*/
 
 import {
   fireEvent,
@@ -39,6 +67,28 @@ describe("Given I am connected as an employee", () => {
       const titleContainer = screen.getByText("Envoyer une note de frais");
       const title = titleContainer.textContent.trim();
       expect(title).toBe("Envoyer une note de frais");
+    });
+
+    test("I expect the new bill icon in the side navigation to be highlighted, ", async () => {
+      Object.defineProperty(window, "localStorage", {
+        value: localStorageMock,
+      });
+      window.localStorage.setItem(
+        "user",
+        JSON.stringify({
+          type: "Employee",
+        })
+      );
+      const root = document.createElement("div");
+      root.setAttribute("id", "root");
+      document.body.append(root);
+      router();
+      window.onNavigate(ROUTES_PATH.NewBill);
+      await waitFor(() => screen.getAllByTestId("icon-mail"));
+
+      const mailIcon = screen.getAllByTestId("icon-mail")[0];
+      //
+      expect(mailIcon.classList.value).toMatch("active-icon");
     });
 
     describe("When I'm filling the form and", () => {
