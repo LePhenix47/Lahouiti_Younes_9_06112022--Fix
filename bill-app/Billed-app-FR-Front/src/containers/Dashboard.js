@@ -96,16 +96,13 @@ export default class {
 
   //SUCCESSFULLY Debugged
   handleEditTicket(e, bill, bills) {
-    if (this.counter === undefined || this.id !== bill.id) this.counter = 0;
-    if (this.id === undefined || this.id !== bill.id) this.id = bill.id;
-
+    //
     bills.forEach((b) => {
       $(`#open-bill${b.id}`).css({ background: "#0D5AE5" });
     });
     $(`#open-bill${bill.id}`).css({ background: "#2A2B35" });
     $(".dashboard-right-container div").html(DashboardFormUI(bill));
     $(".vertical-navbar").css({ height: "150vh" });
-    this.counter++;
     //
     $("#icon-eye-d").click(this.handleClickIconEye);
     $("#btn-accept-bill").click((e) => this.handleAcceptSubmit(e, bill));
