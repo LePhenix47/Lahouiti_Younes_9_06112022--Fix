@@ -63,6 +63,7 @@ export default class NewBill {
     formData.append("email", email);
     formData.append("file", file);
 
+    console.log("Next line will execute the methods inside the store");
     this.store
       .bills()
       .create({
@@ -75,7 +76,6 @@ export default class NewBill {
         this.billId = key;
         this.fileUrl = `public/${key}`;
         this.fileName = fileName;
-        console.log(this.fileUrl, this.fileName);
         e.preventDefault();
       })
       .catch((error) => console.error(error));
@@ -165,18 +165,17 @@ export default class NewBill {
 
     //Depending on whether all the properties in the bill object are defined or not, the bill will or won't be sent to the Back-end
     if (propertiesAreDefined) {
-      console.log({ propertiesAreDefined }, "✔");
+      // console.log({ propertiesAreDefined }, "✔");
       this.updateBill(bill);
       this.onNavigate(ROUTES_PATH["Bills"]);
     } else {
-      console.log({ propertiesAreDefined }, "❌");
+      // console.log({ propertiesAreDefined }, "❌");
       return;
     }
   };
 
   // not need to cover this function by tests
   updateBill = (bill) => {
-    console.log("this.store:\n", this.store);
     if (this.store) {
       this.store
         .bills()

@@ -77,10 +77,11 @@ describe("Given I am connected as an employee", () => {
         const newBills = new NewBill({
           document,
           onNavigate,
+          storeFromMock,
           localStorage: window.localStorage,
         });
-        const form = screen.getByTestId("form-new-bill");
         const handleSubmit = jest.fn(() => newBills.handleSubmit);
+        const form = screen.getByTestId("form-new-bill");
         form.addEventListener("submit", handleSubmit);
         const selectElement = document.querySelector("select");
         const expenditureInput = screen.getByTestId("expense-name");
@@ -89,6 +90,7 @@ describe("Given I am connected as an employee", () => {
         const vatInput = screen.getByTestId("vat");
         const percentageInput = screen.getByTestId("pct");
         const commentInput = screen.getByTestId("commentary");
+
         selectElement.value = "Services en ligne";
         expenditureInput.value = "Test";
         dateInput.value = "2022-12-11";
@@ -96,9 +98,11 @@ describe("Given I am connected as an employee", () => {
         vatInput.value = 69;
         percentageInput.value = 10;
         commentInput.value = "bruh";
+
         fireEvent.submit(form);
         expect(form).toBeTruthy();
       });
+
       test("I don't upload a file at all", () => {
         const onNavigate = (pathname) => {
           document.body.innerHTML = ROUTES({ pathname });
@@ -185,6 +189,7 @@ describe("Given I am connected as an employee", () => {
         });
         const handleChangeFile = jest.fn(() => newBills.handleChangeFile);
         const fileInput = screen.getByTestId("file");
+
         fileInput.addEventListener("change", handleChangeFile);
         fireEvent.change(fileInput, {
           target: {
@@ -196,7 +201,10 @@ describe("Given I am connected as an employee", () => {
           },
         });
 
-        expect(fileInput.files.length).toBe(1);
+        expect(fileInput.value).not.toBe("");
+        expect(newBills.billId).not.toBeNull();
+        expect(newBills.fileUrl).not.toBeNull();
+        expect(newBills.fileName).not.toBeNull();
       });
     });
   });
@@ -210,7 +218,6 @@ describe("Given I am connected as an employee", () => {
 
       let result = {};
       mockedStoreBills.then((object) => {
-        console.log({ object });
         result = object;
         expect(result.id).toBe("47qAXb6fIm2zOKkLzMro");
       });
