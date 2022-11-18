@@ -180,6 +180,7 @@ describe("Given I am connected as an employee", () => {
         const newBills = new NewBill({
           document,
           onNavigate,
+          storeFromMock,
           localStorage: window.localStorage,
         });
         const handleChangeFile = jest.fn(() => newBills.handleChangeFile);
@@ -206,6 +207,13 @@ describe("Given I am connected as an employee", () => {
       const newBill = bill;
 
       const mockedStoreBills = storeFromMock.bills().update(newBill);
+
+      let result = {};
+      mockedStoreBills.then((object) => {
+        console.log({ object });
+        result = object;
+        expect(result.id).toBe("47qAXb6fIm2zOKkLzMro");
+      });
 
       expect(mockedStoreBills).not.toBeNull();
     });
