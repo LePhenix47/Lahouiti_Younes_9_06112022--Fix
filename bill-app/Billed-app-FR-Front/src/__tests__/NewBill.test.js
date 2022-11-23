@@ -184,7 +184,7 @@ describe("Given I am connected as an employee", () => {
         const newBills = new NewBill({
           document,
           onNavigate,
-          storeFromMock,
+          store: storeFromMock,
           localStorage: window.localStorage,
         });
         const handleChangeFile = jest.fn(() => newBills.handleChangeFile);
@@ -200,11 +200,8 @@ describe("Given I am connected as an employee", () => {
             ],
           },
         });
-
-        expect(fileInput.value).not.toBe("");
-        expect(newBills.billId).not.toBeNull();
-        expect(newBills.fileUrl).not.toBeNull();
-        expect(newBills.fileName).not.toBeNull();
+        expect(handleChangeFile).toBeCalled();
+        expect(fileInput.files[0].type).toBe("image/png");
       });
     });
   });

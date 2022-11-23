@@ -63,6 +63,7 @@ export default class NewBill {
     formData.append("email", email);
     formData.append("file", file);
 
+    console.log(this.file);
     console.log("Next line will execute the methods inside the store");
     this.store
       .bills()
